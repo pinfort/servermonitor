@@ -1,0 +1,5 @@
+server-check:
+  http:
+    head:
+      - host: "https://blog.pinfort.me"
+        name: "blog"
