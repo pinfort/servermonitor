@@ -5,6 +5,5 @@ import org.springframework.stereotype.Component
 @Component
 class StatusPage() {
     fun report(targets: List<String>) {
-
     }
 }

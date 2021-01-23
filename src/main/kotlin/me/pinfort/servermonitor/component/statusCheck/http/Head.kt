@@ -24,7 +24,7 @@ class Head(
                 val job = result.second
                 val statusCheckResult = StatusCheckResult(
                     name = targetName,
-                    status = if(job.get().statusCode.is2xxSuccessful) ServerStatus.LIVE else ServerStatus.DEAD
+                    status = if (job.get().statusCode.is2xxSuccessful) ServerStatus.LIVE else ServerStatus.DEAD
                 )
                 results.add(statusCheckResult)
             }

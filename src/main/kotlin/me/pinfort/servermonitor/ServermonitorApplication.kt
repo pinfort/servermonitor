@@ -7,5 +7,5 @@ import org.springframework.boot.runApplication
 class ServermonitorApplication
 
 fun main(args: Array<String>) {
-	runApplication<ServermonitorApplication>(*args)
+    runApplication<ServermonitorApplication>(*args)
 }
