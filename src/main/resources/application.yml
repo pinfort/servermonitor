@@ -1,5 +1,22 @@
 server-check:
+  page-id: ${STATUSPAGE_PAGE_ID:dummy}
   http:
     head:
       - host: "https://blog.pinfort.me"
         name: "blog"
+      - host: "https://mstdn.hyogo.jp"
+        name: "mastodonWeb"
+      - host: ${TARGET_VPN_EAST_HOST:dummy}
+        name: "vpnEast"
+      - host: ${TARGET_VPN_WEST_HOST:dummy}
+        name: "vpnWest"
+
+  components:
+    - name: blog
+      component-id: 1t4l13jrjrsj
+    - name: mastodonWeb
+      component-id: x4bbyn0rhlr5
+    - name: vpnEast
+      component-id: k1r5m38g1b24
+    - name: vpnWest
+      component-id: hdfw7zks0197
