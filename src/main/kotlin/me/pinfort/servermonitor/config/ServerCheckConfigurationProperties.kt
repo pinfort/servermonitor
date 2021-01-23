@@ -6,14 +6,14 @@ import org.springframework.stereotype.Component
 @Component
 @ConfigurationProperties(prefix = "server-check")
 class ServerCheckConfigurationProperties(
-    val http: Http
+    var http: Http = Http()
 ) {
-    inner class Http(
-        val head: List<Target>
+    class Http(
+        var head: List<Target> = listOf(Target())
     )
 
-    inner class Target(
-        val host: String,
-        val name: String
+    class Target(
+        var host: String = "",
+        var name: String = ""
     )
 }
