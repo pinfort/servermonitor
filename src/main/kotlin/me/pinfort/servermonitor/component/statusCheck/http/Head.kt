@@ -4,13 +4,8 @@ import kotlinx.coroutines.runBlocking
 import me.pinfort.servermonitor.config.ServerCheckConfigurationProperties
 import me.pinfort.servermonitor.entity.StatusCheckResult
 import me.pinfort.servermonitor.enum.ServerStatus
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.http.HttpMethod
 import org.springframework.http.ResponseEntity
-import org.springframework.http.client.ClientHttpResponse
-import org.springframework.http.client.OkHttp3ClientHttpRequestFactory
 import org.springframework.stereotype.Component
-import org.springframework.util.concurrent.ListenableFuture
 import org.springframework.web.reactive.function.client.WebClient
 import reactor.core.publisher.Mono
 import java.net.URI
