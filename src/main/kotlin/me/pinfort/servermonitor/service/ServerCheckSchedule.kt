@@ -2,7 +2,6 @@ package me.pinfort.servermonitor.service
 
 import me.pinfort.servermonitor.component.statusCheck.http.Head
 import me.pinfort.servermonitor.component.statusReport.StatusPage
-import me.pinfort.servermonitor.config.ServerCheckConfigurationProperties
 import org.springframework.scheduling.annotation.EnableScheduling
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service

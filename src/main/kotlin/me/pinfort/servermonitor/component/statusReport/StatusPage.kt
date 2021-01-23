@@ -51,7 +51,7 @@ class StatusPage(
             componentIds = componentIds
         )
         val pageId = serverCheckConfigurationProperties.pageId
-        return webClient.post().uri(URI("https://api.statuspage.io/v1/pages/${pageId}/incidents"))
+        return webClient.post().uri(URI("https://api.statuspage.io/v1/pages/$pageId/incidents"))
             .body(BodyInserters.fromValue(incidentObject))
             .retrieve().toBodilessEntity()
     }
