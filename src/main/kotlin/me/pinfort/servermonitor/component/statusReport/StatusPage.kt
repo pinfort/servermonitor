@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.BodyInserters
 import org.springframework.web.reactive.function.client.WebClient
 import reactor.core.publisher.Mono
-import java.net.URI
 
 @Component
 class StatusPage(
@@ -38,7 +37,7 @@ class StatusPage(
                 val job = kickApi(statuses.map { it.first }, incidentName)
                 val responseEntity = job.block()
                 if (responseEntity?.statusCode?.is2xxSuccessful != true) {
-                    logger.error("StatusPage API returned error response code. responseCode=${responseEntity?.statusCode.toString()}")
+                    logger.error("StatusPage API returned error response code. responseCode=${responseEntity?.statusCode}")
                     return@runBlocking false
                 }
             } catch (e: RuntimeException) {

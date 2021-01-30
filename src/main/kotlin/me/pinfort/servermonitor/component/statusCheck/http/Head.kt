@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
 import reactor.core.publisher.Mono
-import java.net.URI
 
 @Component
 class Head(

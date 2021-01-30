@@ -45,10 +45,12 @@ class HeadTest {
         every { mono.block() } returns ResponseEntity.ok().build()
 
         val actual = component.check()
-        val expected = listOf(StatusCheckResult(
-            name = "example",
-            status = ServerStatus.LIVE
-        ))
+        val expected = listOf(
+            StatusCheckResult(
+                name = "example",
+                status = ServerStatus.LIVE
+            )
+        )
         Assertions.assertIterableEquals(expected, actual)
     }
 
@@ -57,10 +59,12 @@ class HeadTest {
         every { mono.block() } throws RuntimeException()
 
         val actual = component.check()
-        val expected = listOf(StatusCheckResult(
-            name = "example",
-            status = ServerStatus.DEAD
-        ))
+        val expected = listOf(
+            StatusCheckResult(
+                name = "example",
+                status = ServerStatus.DEAD
+            )
+        )
         Assertions.assertIterableEquals(expected, actual)
     }
 
@@ -69,10 +73,12 @@ class HeadTest {
         every { mono.block() } returns ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build()
 
         val actual = component.check()
-        val expected = listOf(StatusCheckResult(
-            name = "example",
-            status = ServerStatus.DEAD
-        ))
+        val expected = listOf(
+            StatusCheckResult(
+                name = "example",
+                status = ServerStatus.DEAD
+            )
+        )
         Assertions.assertIterableEquals(expected, actual)
     }
 }
