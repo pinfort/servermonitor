@@ -4,6 +4,7 @@ import kotlinx.coroutines.runBlocking
 import me.pinfort.servermonitor.config.ServerCheckConfigurationProperties
 import me.pinfort.servermonitor.entity.StatusCheckResult
 import me.pinfort.servermonitor.enum.ServerStatus
+import org.slf4j.Logger
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
@@ -13,7 +14,8 @@ import java.net.URI
 @Component
 class Head(
     private val webClient: WebClient,
-    private val serverCheckConfigurationProperties: ServerCheckConfigurationProperties
+    private val serverCheckConfigurationProperties: ServerCheckConfigurationProperties,
+    private val logger: Logger
 ) {
     fun check(): List<StatusCheckResult> {
         val results: MutableList<StatusCheckResult> = mutableListOf()
@@ -21,9 +23,21 @@ class Head(
             for (result in serverCheckConfigurationProperties.http.head.map { doRequest(it) }) {
                 val targetName = result.first
                 val job = result.second
+                var response: ResponseEntity<Void>? = null
+                try {
+                    response = job.block()
+                } catch (e: RuntimeException) {
+                    logger.error("target server cannot be connected. targetName=$targetName, errorMessage=${e.message}")
+                }
                 val statusCheckResult = StatusCheckResult(
                     name = targetName,
-                    status = if (job.block()?.statusCode?.is2xxSuccessful == true) ServerStatus.LIVE else ServerStatus.DEAD
+                    status = if (response?.statusCode?.is2xxSuccessful == true) {
+                        logger.info("server is LIVE. targetName=$targetName")
+                        ServerStatus.LIVE
+                    } else {
+                        logger.warn("server is DEAD. targetName=$targetName")
+                        ServerStatus.DEAD
+                    }
                 )
                 results.add(statusCheckResult)
             }
@@ -31,7 +45,8 @@ class Head(
         return results
     }
 
-    suspend fun doRequest(target: ServerCheckConfigurationProperties.Target): Pair<String, Mono<ResponseEntity<Void>>> {
-        return target.name to webClient.head().uri(URI(target.host)).retrieve().toBodilessEntity()
+    private suspend fun doRequest(target: ServerCheckConfigurationProperties.Target): Pair<String, Mono<ResponseEntity<Void>>> {
+        logger.debug("checking server status by requesting with HTTP HEAD. targetName=${target.name}, targetHost=${target.host}")
+        return target.name to webClient.head().uri(target.host).retrieve().toBodilessEntity()
     }
 }
