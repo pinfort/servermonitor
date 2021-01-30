@@ -6,7 +6,9 @@ import org.springframework.stereotype.Component
 @Component
 @ConfigurationProperties(prefix = "server-check")
 class ServerCheckConfigurationProperties(
-    var http: Http = Http()
+    var pageId: String = "",
+    var http: Http = Http(),
+    var components: List<Components> = listOf(Components())
 ) {
     class Http(
         var head: List<Target> = listOf(Target())
@@ -15,5 +17,10 @@ class ServerCheckConfigurationProperties(
     class Target(
         var host: String = "",
         var name: String = ""
+    )
+
+    class Components(
+        var name: String = "",
+        var componentId: String = ""
     )
 }
