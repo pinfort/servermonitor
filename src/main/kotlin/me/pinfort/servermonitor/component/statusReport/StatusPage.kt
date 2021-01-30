@@ -49,7 +49,7 @@ class StatusPage(
         }
     }
 
-    suspend fun kickApi(componentIds: List<String>, incidentName: String): Mono<ResponseEntity<Void>> {
+    private suspend fun kickApi(componentIds: List<String>, incidentName: String): Mono<ResponseEntity<Void>> {
         val components: MutableMap<String, String> = mutableMapOf()
         componentIds.forEach { components[it] = "major_outage" }
         val incidentObject = IncidentApi(
@@ -61,7 +61,7 @@ class StatusPage(
             componentIds = componentIds
         )
         val pageId = serverCheckConfigurationProperties.pageId
-        return webClient.post().uri(URI("https://api.statuspage.io/v1/pages/$pageId/incidents"))
+        return webClient.post().uri("https://api.statuspage.io/v1/pages/$pageId/incidents")
             .body(BodyInserters.fromValue(incidentObject))
             .retrieve().toBodilessEntity()
     }

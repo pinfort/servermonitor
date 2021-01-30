@@ -17,7 +17,6 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.reactive.function.client.WebClient
 import reactor.core.publisher.Mono
 
-
 class HeadTest {
     @MockK
     private lateinit var webClient: WebClient
